@@ -94,7 +94,7 @@ let j=1;
   for (let i = 1; i <= lastDay; i++) {
     
     if (
-    j >= new Date().getDate() &&
+    j >=new Date().getDate() &&
       date.getMonth() >= new Date().getMonth()
     ) {
       days += `<div class="day_num">${i}</div>`;
