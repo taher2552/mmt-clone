@@ -1,4 +1,5 @@
 const date = new Date();
+
 const weekday = document.querySelector('.weekdays');
 let monthNameInCalendar;
 
@@ -8,6 +9,7 @@ const Main_box = document.querySelector('#Main_calender');
 const monthName = document.querySelector('.month_name');
 const yearNumber = document.querySelector('.year_number');
 const dayToDisplay = document.querySelector(".day_to_display");
+const calenderHeading = document.querySelector(".calender_heading");
 
 
 Box_flightto.addEventListener('click', hideelements)
@@ -81,20 +83,34 @@ monthNameInCalendar= months[date.getMonth()];
   // document.querySelector(".date p").innerHTML = new Date().toDateString();
 
   let days = "";
+let j=1;
+  
 
   for (let x = firstDayIndex; x > 0; x--) {
     days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
   }
+  
 
   for (let i = 1; i <= lastDay; i++) {
+    
     if (
-      i === new Date().getDate() &&
-      date.getMonth() === new Date().getMonth()
+    j >= new Date().getDate() &&
+      date.getMonth() >= new Date().getMonth()
     ) {
-      days += `<div class="today">${i}</div>`;
+      days += `<div class="day_num">${i}</div>`;
     } else {
-      days += `<div>${i}</div>`;
+      if(date.getMonth()>new Date().getMonth()){
+        days += `<div>${i}</div>`;
+      }
+      else{
+        days += `<div class="prev-date" >${i}</div>`;
+       
+      }
     }
+   j++;
+
+
+  
   }
 
   for (let j = 1; j <= nextDays; j++) {
@@ -177,12 +193,32 @@ monthNameInCalendar= months[date.getMonth()];
       }
       
 
-      dayToDisplay.innerText=day;
+
+      let previousDays=e.target.classList.contains("prev-date");
+      let nextDays=e.target.classList.contains("next-date");
+      let today=e.target.classList.contains("day_num");
+      console.log(e.target)
+
+
+       if(!previousDays  && !nextDays && today){
+        
       monthDay.innerText=e.target.innerText;
+      dayToDisplay.innerText=day;
       monthName.innerText=monthNameInCalendar.slice(0,3);
       yearNumber.innerText=2023;
 
+      let nameOfDay = dayToDisplay.innerText 
+      let monthDayNum = monthDay.innerText 
+      let monthNameCal = monthName.innerText 
+      let currentYear = yearNumber.innerText 
+
+
+      localStorage.setItem("name_of_day", nameOfDay);
+      localStorage.setItem("day", monthDayNum);
+      localStorage.setItem("month", monthNameCal);
+      localStorage.setItem("year", currentYear);
       Main_box.style.display="none";
+      }
 
 
     
@@ -191,28 +227,31 @@ monthNameInCalendar= months[date.getMonth()];
 
 document.querySelector(".prev").addEventListener("click", () => {
   date.setMonth(date.getMonth() - 1);
-  console.log(date)
-  if(monthNameInCalendar=="February"){
-    document.querySelector(".prev").style.visibility="hidden";
+  console.log(calenderHeading);
+  if(calenderHeading.innerText=="FEBRUARY 2023"){
+    document.querySelector(".prev").style.visibility="hidden"
+  }else{
+    document.querySelector(".next").style.visibility="visible"
   }
 
-  if(monthNameInCalendar=="December"){
-    document.querySelector(".next").style.visibility="visible";
-  }
 
   renderCalendar();
 });
 
 document.querySelector(".next").addEventListener("click", () => {
-  date.setMonth(date.getMonth() + 1);
-  console.log(monthNameInCalendar)
-  if(monthNameInCalendar=="January"){
+  console.log(calenderHeading.innerText)
+  if(calenderHeading.innerText=="NOVEMBER 2023"){
+    document.querySelector(".next").style.visibility="hidden";
+  }else{
     document.querySelector(".prev").style.visibility="visible";
   }
+  
+  date.setMonth(date.getMonth() + 1);
 
-  if(monthNameInCalendar=="November"){
-    document.querySelector(".next").style.visibility="hidden";
-  }
+ 
+
+ 
+
   renderCalendar();
 });
 
