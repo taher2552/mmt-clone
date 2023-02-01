@@ -90,7 +90,7 @@ function reset() {
 }
 
 function login() {
-  blackBackground.classList.remove('hidden');
+  blackBackground.style.display="block";
   loginPopUp.style.display = "block";
   myBizSection.classList.add("hidden");
   persnolAccountSection.classList.remove("hidden");
@@ -102,7 +102,7 @@ function login() {
 function disappear() {
   reset();
   loginPopUp.style.display = "none";
-  blackBackground.classList.add('hidden');
+  blackBackground.style.display="none";
   congratsMessageSection.classList.add('hidden');
   crossButton.classList.remove('hidden');
   document.getElementsByClassName('n-conf')[0].style.display = 'none';
@@ -362,6 +362,12 @@ function signOutFunction(){
   userNameDisplay.innerText="";
   clickLoginButton.style.display="block"
 
+}
+
+window.onclick= function(e){
+  if(e.target==blackBackground){
+    blackBackground.style.display="none";
+  }
 }
 
 
