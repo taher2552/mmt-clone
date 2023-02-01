@@ -100,7 +100,7 @@ let j=1;
       days += `<div class="day_num">${i}</div>`;
     } else {
       if(date.getMonth()>new Date().getMonth()){
-        days += `<div>${i}</div>`;
+        days += `<div class="day_num">${i}</div>`;
       }
       else{
         days += `<div class="prev-date" >${i}</div>`;
